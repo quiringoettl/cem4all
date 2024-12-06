@@ -1,0 +1,10 @@
+numpy==1.26.4
+scipy
+matplotlib
+pandas
+openpyxl
+torch==2.1.2
+rdkit==2023.9.5
+tokenizers==0.15.2
+transformers==4.39.3
+scikit-learn==1.3.0
