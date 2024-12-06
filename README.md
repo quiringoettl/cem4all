@@ -1,12 +1,16 @@
 # cem4all
 This repository contains the implementation for the convex envelope method (CEM) for arbitrary chemical systems (in terms of aggregate state, number of components, and number of phases) [1]. The present version of the CEM is heavily based on our previous publication [2] that describes the CEM for arbitrary liquid phase equilibria. The repository also includes code from the implementation of the HANNA-model [3].
 
-TODO: install and setup, what does the CEM do, some graphics, etc, how to reproduce.
+TODO: graphics and concept of the CEM
 
 
 # How to cite
 
 To cite the CEM or when you are using code from this repository, please cite our works on that topic [1, 2]. When you are using the HANNA-model, please cite [3].
+
+# Installation
+
+TODO: how to reproduce, set up. Python 3.11.7
 
 
 # References
