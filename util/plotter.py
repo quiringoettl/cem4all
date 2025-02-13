@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
@@ -8,6 +9,8 @@ from discretization.point_discretization import PointDisc
 class Plotter:
     def __init__(self, num_comp: int):
         self.num_comp = num_comp
+        self.legend_fontsize = 13
+        mpl.rcParams['axes.labelsize'] = 16
 
         # to be able to plot the simplex for the whole component system, we just construct it
         # in the same way as in the simplex discretization
@@ -50,16 +53,6 @@ class Plotter:
             plt.plot(lines[0], lines[1], color='black', zorder=5, linestyle='dashed', linewidth=3.0)
 
     def plot_dgmix(self, dict_dgmix_per_phases: dict, color_dict: dict, do_scatter: bool):
-        # plot liquid phase
-        self.plot_dgmix_for_one_phase(
-            dgmix_values=dict_dgmix_per_phases['l'],
-            molar_fractions=dict_dgmix_per_phases['corresponding_mfr'],
-            color=color_dict['l'],
-            label='liquid',
-            marker='s',
-            do_scatter=do_scatter
-        )
-
         # plot solid and vapor, if existing
         if dict_dgmix_per_phases['g'] is not None:
             self.plot_dgmix_for_one_phase(
@@ -70,6 +63,16 @@ class Plotter:
                 marker='o',
                 do_scatter=do_scatter
             )
+
+        # plot liquid phase
+        self.plot_dgmix_for_one_phase(
+            dgmix_values=dict_dgmix_per_phases['l'],
+            molar_fractions=dict_dgmix_per_phases['corresponding_mfr'],
+            color=color_dict['l'],
+            label='liquid',
+            marker='s',
+            do_scatter=do_scatter
+        )
 
         if dict_dgmix_per_phases['s'] is not None:
             self.plot_dgmix_for_one_phase(
@@ -87,7 +90,7 @@ class Plotter:
         plt.xticks([0, 1])
         plt.yticks([0])
         plt.xlabel('$x_1$ / mol$\cdot$mol$^{-1}$')
-        plt.legend()
+        plt.legend(prop={'size': self.legend_fontsize})
 
     def plot_dgmix_for_one_phase(self, dgmix_values: np.array, molar_fractions: list, color: str, label: str,
                                  marker: str, do_scatter: bool):
@@ -141,11 +144,11 @@ class Plotter:
                 for lines in lines_to_plot:
                     plt.plot(lines[0], lines[1], color='black', zorder=1)
 
-            if len(mfr_liquid_points) > 0:
-                plt.scatter(mfr_liquid_points, t_liquid_points, color='blue', label='liquid', zorder=2)
-
             if len(mfr_gas_points) > 0:
                 plt.scatter(mfr_gas_points, t_gas_points, color='magenta', label='gas', zorder=2)
+
+            if len(mfr_liquid_points) > 0:
+                plt.scatter(mfr_liquid_points, t_liquid_points, color='blue', label='liquid', zorder=2)
 
             if len(mfr_solid_points) > 0:
                 plt.scatter(mfr_solid_points, t_solid_points, color='lime', label='solid', zorder=2)
@@ -155,7 +158,7 @@ class Plotter:
             plt.ylim(t_range[0], t_range[1])
             plt.ylabel('$T$ / K')
             plt.xlabel(r'$x_{\mathrm{' + name_comp1 + '}}$')
-            plt.legend(loc=location)
+            plt.legend(loc=location, prop={'size': self.legend_fontsize})
 
     def plot_pxy(self, list_with_pxy_info: list, pressure_range: list, name_comp1: str, plot_lines: bool,
                  location: str or None):
@@ -191,15 +194,15 @@ class Plotter:
                 for lines in lines_to_plot:
                     plt.plot(lines[0], lines[1], color='black', zorder=1)
 
-            plt.scatter(mfr_liquid_points, p_liquid_points, color='blue', label='liquid', zorder=2)
             plt.scatter(mfr_gas_points, p_gas_points, color='magenta', label='gas', zorder=2)
+            plt.scatter(mfr_liquid_points, p_liquid_points, color='blue', label='liquid', zorder=2)
 
             # final plot formats
             plt.xlim(0, 1)
             plt.ylim(pressure_range[0], pressure_range[1])
             plt.ylabel('$p$ / bar')
             plt.xlabel(r'$x_{\mathrm{' + name_comp1 + '}}$')
-            plt.legend(loc=location)
+            plt.legend(loc=location, prop={'size': self.legend_fontsize})
 
     def plot_outer_simplex(self, color, color_dict: dict):
         if self.num_comp == 3:
@@ -215,13 +218,13 @@ class Plotter:
 
             # legend
             custom_legend = [
-                mpatches.Patch(color=color_dict['l'], label='liquid'),
                 mpatches.Patch(color=color_dict['g'], label='gas'),
+                mpatches.Patch(color=color_dict['l'], label='liquid'),
                 mpatches.Patch(color=color_dict['s'], label='solid')
             ]
 
             # Add the custom legend
-            plt.legend(handles=custom_legend, loc='upper right')
+            plt.legend(handles=custom_legend, loc='upper right', prop={'size': self.legend_fontsize})
 
         elif self.num_comp == 4:
             points = [self.vertices_outer_simplex[j] for j in range(self.num_comp)]

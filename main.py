@@ -13,11 +13,6 @@ if __name__ == "__main__":
     if not os.path.isdir(results_path):
         os.mkdir(results_path)
 
-    # LLEs (a subset of those done in Göttl et al. 2023, just to check if LLEs still work)
-    results_gen.generate_chen2000_LLEs(discretization_path=disc_path)
-    results_gen.generate_chen2001_LLEs(discretization_path=disc_path)
-    results_gen.generate_yuan2019_LLEs(discretization_path=disc_path)
-
     # VLEs
     results_gen.generate_oh2003_VLEs(discretization_path=disc_path)
     results_gen.generate_xiao2013_VLEs(discretization_path=disc_path)
@@ -30,3 +25,8 @@ if __name__ == "__main__":
 
     # HANNA example
     results_gen.HANNA_example(discretization_path=disc_path)
+
+    # LLEs (a subset of those done in Göttl et al. 2023, just to check if LLEs still work)
+    results_gen.generate_chen2000_LLEs(discretization_path=disc_path)
+    results_gen.generate_chen2001_LLEs(discretization_path=disc_path)
+    results_gen.generate_yuan2019_LLEs(discretization_path=disc_path)
